@@ -1,9 +1,10 @@
 import { Outlet } from "react-router";
+import { Header } from "../widgets/Header";
 
-export default function Dashboard() {
+export default function Home() {
   return (
     <div>
-      Dashboard
+      <Header />
       <Outlet />
     </div>
   );
