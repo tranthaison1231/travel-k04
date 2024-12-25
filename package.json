@@ -14,17 +14,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@react-router/fs-routes": "^7.1.0",
-    "@react-router/node": "^7.1.0",
+    "@react-router/fs-routes": "^7.1.1",
+    "@react-router/node": "^7.1.1",
     "isbot": "^5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router": "^7.1.0",
+    "react-router": "^7.1.1",
     "typescript": "^5.7.2",
     "vite": "^6.0.5"
   },
   "devDependencies": {
-    "@react-router/dev": "^7.1.0",
+    "@react-router/dev": "^7.1.1",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "@vitejs/plugin-react": "^4.3.4",
