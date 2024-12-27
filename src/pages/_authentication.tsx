@@ -5,11 +5,11 @@ import Logo from "~/assets/images/logo.svg";
 export default function Home() {
   return (
     <div className="flex w-full h-screen">
-      <div className="lg:w-1/2 lg:px-20 lg:py-26">
+      <div className="lg:w-1/2 p-4 lg:px-20 overflow-y-scroll">
         <img src={Logo} className="lg:mx-auto pt-6 pr-5 mb-10" />
         <Outlet />
       </div>
-      <img src={AuthenticationBackground} className="hidden lg:block lg:w-1/2 lg:h-256" />
+      <img src={AuthenticationBackground} className="hidden w-1/2 lg:block" />
     </div>
   );
 }

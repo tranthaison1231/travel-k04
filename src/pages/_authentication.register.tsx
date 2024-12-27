@@ -1,7 +1,7 @@
-import { Button } from "~/shared/ui/Button";
-import { Input } from "~/shared/ui/Input";
 import Face from "~/assets/images/face.svg";
 import Google from "~/assets/images/google.svg";
+import { Button } from "~/shared/ui/atoms/Button";
+import { Input } from "~/shared/ui/atoms/Input";
 
 export default function Register() {
   return (
@@ -35,10 +35,15 @@ export default function Register() {
         <div className="flex gap-2 bg-[#1877F2] items-center px-10 py-5 lg:w-1/2 justify-center">
           <img src={Face} alt="" className="" />
           <p className="text-white font-semibold"> Sign up with Facebook</p>
-        </div>        
+        </div>
       </div>
-      <p className="font-medium text-center mt-8 pb-5">Don't have an account? 
-        <a href="./login" className="text-blue-500"> Sign In</a> </p>
+      <p className="font-medium text-center mt-8 pb-5">
+        Don't have an account?
+        <a href="./login" className="text-blue-500">
+          {" "}
+          Sign In
+        </a>{" "}
+      </p>
     </div>
-  )
+  );
 }
