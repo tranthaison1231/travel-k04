@@ -1,3 +1,7 @@
+import { Travel } from "~/widgets/Travel";
+
 export default function Home() {
-  return <div> Home</div>;
+  return (
+    < Travel />
+  );
 }
