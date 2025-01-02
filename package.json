@@ -16,11 +16,15 @@
   "dependencies": {
     "@react-router/fs-routes": "^7.1.1",
     "@react-router/node": "^7.1.1",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/react-select": "^5.0.1",
     "clsx": "^2.1.1",
     "isbot": "^5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.1.1",
+    "react-router-dom": "^7.1.1",
+    "react-select": "^5.9.0",
     "tailwind-merge": "^2.6.0",
     "typescript": "^5.7.2",
     "vite": "^6.0.6"
