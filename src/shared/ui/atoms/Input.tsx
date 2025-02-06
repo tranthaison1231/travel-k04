@@ -1,5 +1,7 @@
+import { RefCallBack } from "react-hook-form";
+
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  ref?: React.RefObject<HTMLInputElement | null>;
+  ref?: RefCallBack;
 };
 
 export function Input({

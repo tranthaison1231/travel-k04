@@ -1,9 +1,9 @@
-import Most from "~/widgets/Most";
+import { Article  } from "~/widgets/Article";
 
-export default function Article() {
+export default function ArticlePage() {
   return (
     <div>
-      <Most />
+      <Article />
     </div>
   );
 }

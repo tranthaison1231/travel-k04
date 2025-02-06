@@ -24,10 +24,10 @@ export const useDropdown = (menuItems: { label: string; link: string }[]) => {
   const DropdownMenu = (): ReactNode =>
     isOpen && (
       <div
-        className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-md z-50"
+        className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-md z-50 "
         ref={dropdownRef}
       >
-        <ul className="py-1">
+        <ul className="py-1 ">
           {menuItems.map((item, index) => (
             <li key={index}>
               <Link
