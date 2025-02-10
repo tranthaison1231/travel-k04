@@ -1,3 +1,4 @@
+import { ChevronDown } from "lucide-react";
 import { Link } from "react-router";
 import {
   Menubar,
@@ -11,6 +12,10 @@ const NAV_ITEMS = [
   {
     title: "Home",
     link: "/",
+  },
+  {
+    title: "Tours",
+    link: "/tours",
     children: [
       {
         title: "Home",
@@ -23,16 +28,36 @@ const NAV_ITEMS = [
     ],
   },
   {
-    title: "Tours",
-    link: "/tours",
-  },
-  {
     title: "Service",
     link: "/services",
+    children: [
+      {
+        title: "Home",
+        link: "/",
+      },
+      {
+        title: "Home 2",
+        link: "/home-2",
+      },
+    ],
   },
   {
     title: "MICE",
     link: "/mice",
+    children: [
+      {
+        title: "Destination",
+        link: "/destination",
+      },
+      {
+        title: "Services",
+        link: "/services",
+      },
+      {
+        title: "MICE G.R.O.U.P",
+        link: "/mice-group",
+      }
+    ],
   },
   {
     title: "Blog",
@@ -41,6 +66,16 @@ const NAV_ITEMS = [
   {
     title: "About Us",
     link: "/about-us",
+    children: [
+      {
+        title: "Home",
+        link: "/",
+      },
+      {
+        title: "Home 2",
+        link: "/home-2",
+      },
+    ],
   },
   {
     title: "Membership",
@@ -54,7 +89,10 @@ export function NavBar() {
       {NAV_ITEMS.map((item) => (
         <Link key={item.link} to={item.link} className="cursor-pointer">
           <MenubarMenu>
-            <MenubarTrigger>{item.title}</MenubarTrigger>
+            <MenubarTrigger>
+              {item.title}
+              {item.children && <ChevronDown className="size-4" />}
+            </MenubarTrigger>
             {item.children && (
               <MenubarContent>
                 {item.children.map((child) => (
