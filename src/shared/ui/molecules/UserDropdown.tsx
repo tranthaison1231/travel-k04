@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
-export const useDropdown = (menuItems: { label: string; link: string }[]) => {
+export const UserDropdown = (menuItems: { label: string; link: string }[]) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -10,7 +10,10 @@ export const useDropdown = (menuItems: { label: string; link: string }[]) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         closeDropdown();
       }
     };
@@ -32,7 +35,8 @@ export const useDropdown = (menuItems: { label: string; link: string }[]) => {
             <li key={index}>
               <Link
                 to={item.link}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
                 {item.label}
               </Link>
             </li>
