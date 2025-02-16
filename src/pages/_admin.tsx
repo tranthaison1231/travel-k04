@@ -9,7 +9,7 @@ export default function Layout() {
       <AppSidebar />
       <div className="flex flex-col w-full">
         <AdminHeader />
-        <main className="p-4">
+        <main className="h-full p-4">
           <Outlet />
         </main>
       </div>

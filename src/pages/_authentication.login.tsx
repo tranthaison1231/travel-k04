@@ -4,11 +4,9 @@ import { SocialButton } from "~/shared/ui/molecules/SocialButton";
 import { useRef, useState } from "react";
 import Face from "~/assets/images/face.svg";
 import Google from "~/assets/images/google.svg";
-import {useForm, SubmitHandler} from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
- 
 
 export const LoginSchema = z.object({
   email: z.string().email({
@@ -27,35 +25,37 @@ export default function Login() {
   } = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
   });
-const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
-  console.log(data);
-}
- 
+  const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
+    console.log(data);
+  };
+
   return (
     <div>
-      <form onSubmit= {handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-[#294D81] text-5xl">Login to your account</h1>
         <div className="mt-13">
-          <p className="font-bold mb-3">Email</p>
+          <p className="mb-3 font-bold">Email</p>
           <Input placeholder="Enter your email" {...register("email")} />
-          {errors.email && <p className="text-red-500 mt-4">{errors.email.message}</p>}
+          {errors.email && (
+            <p className="mt-4 text-red-500">{errors.email.message}</p>
+          )}
         </div>
         <div className="mt-6">
-          <p className="font-bold mb-3">Password</p>
+          <p className="mb-3 font-bold">Password</p>
           <Input
             placeholder="Enter your password"
             type="password"
             {...register("password")}
           />
           {errors.password && (
-            <p className="text-red-500 mt-4">{errors.password.message}</p>
+            <p className="mt-4 text-red-500">{errors.password.message}</p>
           )}
         </div>
-        <p className="underline font-bold mt-6 mb-8">Forgot Password</p>
+        <p className="mt-6 mb-8 font-bold underline">Forgot Password</p>
         <Button type="submit"> Sign In</Button>
       </form>
-      <p className="text-center mt-8">OR</p>
-      <div className="flex gap-4 mt-8 w-full lg:justify-center ">
+      <p className="mt-8 text-center">OR</p>
+      <div className="flex w-full gap-4 mt-8 lg:justify-center ">
         <SocialButton icon={Google} className="w-1/2" variant="default">
           Sign in with Google
         </SocialButton>
@@ -63,12 +63,11 @@ const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
           Sign in with Facebook
         </SocialButton>
       </div>
-      <p className="font-medium text-center lg:mt-8 mt-6 pb-5">
+      <p className="pb-5 mt-6 font-medium text-center lg:mt-8">
         Don't have an account?
         <a href="./register" className="text-blue-500">
-          {" "}
           Sign Up
-        </a>{" "}
+        </a>
       </p>
     </div>
   );

@@ -50,15 +50,15 @@ const NAV_ITEMS = [
 
 export function NavBar() {
   return (
-    <Menubar className="flex gap-6 text-[#101010] text-base font-normal border-none shadow-none">
+    <Menubar className="flex gap-6 text-[#101010] text-base font-normal border-none shadow-none ">
       {NAV_ITEMS.map((item) => (
         <Link key={item.link} to={item.link} className="cursor-pointer">
           <MenubarMenu>
-            <MenubarTrigger>{item.title}</MenubarTrigger>
+            <MenubarTrigger>{item.title} 👍</MenubarTrigger>
             {item.children && (
               <MenubarContent>
                 {item.children.map((child) => (
-                  <MenubarItem key={child.link}>{child.title}</MenubarItem>
+                  <MenubarItem key={child.link}>{child.title} </MenubarItem>
                 ))}
               </MenubarContent>
             )}
