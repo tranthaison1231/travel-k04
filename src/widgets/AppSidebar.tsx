@@ -1,5 +1,6 @@
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 import { useLocation } from "react-router";
+import Logo from "~/assets/images/logo.svg";
 
 import {
   Sidebar,
@@ -49,7 +50,9 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Travel Buddy Admin</SidebarGroupLabel>
+          <SidebarGroupLabel className="my-2 flex justify-center">
+            <img src={Logo} alt="" className="w-32 h-16" />
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
