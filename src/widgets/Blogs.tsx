@@ -85,7 +85,7 @@ export default function Blog() {
           <p className="text-3xl font-normal mb-6">Search the blog</p>
           <input
             placeholder="Search "
-            className="hidden lg:block h-11 w-full text-base font-normal outline-none border-2 px-3 py-3 rounded-full mb-8"
+            className="hidden lg:block h-11 w-full text-base font-normal outline-hidden border-2 px-3 py-3 rounded-full mb-8"
           />
           <p className="text-3xl font-normal mb-6">Latest posts</p>
           {LATESTPOSTS.map((post) => (
