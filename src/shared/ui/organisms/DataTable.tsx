@@ -1,7 +1,8 @@
-import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
+  Row,
+  RowSelectionState,
   SortingState,
   VisibilityState,
   flexRender,
@@ -12,14 +13,10 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
+import * as React from "react";
+import { Invoice } from "~/pages/_admin.admin.inbox";
 
 import { Button } from "~/shared/ui/atoms/Button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "~/shared/ui/molecules/DropdownMenu";
 import { Input } from "~/shared/ui/atoms/Input";
 import {
   Table,
@@ -29,12 +26,24 @@ import {
   TableHeader,
   TableRow,
 } from "~/shared/ui/atoms/Table";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "~/shared/ui/molecules/DropdownMenu";
+
+import { ModalAdd } from "~/shared/ui/organisms/ModalAdd";
 
 export type DataTableProps<T> = {
   data: T[];
   columns: ColumnDef<T, unknown>[];
   filterPlaceholder?: string;
   searchColumn: string;
+  rowSelection: RowSelectionState;
+  setRowSelection: (rowSelection: any) => void;
+  handleAddInvoice: (invoice: T) => void;
+  handleDeleteCheckedInvoices: () => void;
 };
 
 export function DataTable<T>({
@@ -42,6 +51,10 @@ export function DataTable<T>({
   columns,
   filterPlaceholder,
   searchColumn,
+  handleAddInvoice,
+  rowSelection,
+  setRowSelection,
+  handleDeleteCheckedInvoices,
 }: DataTableProps<T>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -49,7 +62,7 @@ export function DataTable<T>({
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  // const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable<T>({
     data,
@@ -62,6 +75,8 @@ export function DataTable<T>({
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    // getRowId: (row) => row.id,
+    getRowId: (row) => row.id,
     state: {
       sorting,
       columnFilters,
@@ -72,6 +87,14 @@ export function DataTable<T>({
 
   return (
     <div className="w-full">
+      <div className="flex gap-2">
+        <ModalAdd handleAddInvoice={handleAddInvoice} />
+        {table.getFilteredSelectedRowModel().rows.length > 0 && (
+          <Button onClick={handleDeleteCheckedInvoices} variant="destructive">
+            Delete checked
+          </Button>
+        )}
+      </div>
       <div className="flex items-center py-4">
         <Input
           placeholder={filterPlaceholder}
@@ -83,6 +106,7 @@ export function DataTable<T>({
           }
           className="max-w-sm"
         />
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
