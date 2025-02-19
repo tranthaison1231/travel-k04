@@ -10,7 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "~/shared/ui/sidebar";
+} from "~/shared/ui/organisms/Sidebar";
 import { cn } from "~/shared/utils/cn";
 
 // Menu items.

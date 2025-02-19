@@ -7,15 +7,15 @@ import { useIsMobile } from "~/shared/hooks/use-mobile";
 import { cn } from "~/shared/utils/cn";
 import { Button } from "~/shared/ui/atoms/Button";
 import { Input } from "~/shared/ui/atoms/Input";
-import { Separator } from "~/shared/ui/separator";
-import { Sheet, SheetContent } from "~/shared/ui/sheet";
-import { Skeleton } from "~/shared/ui/skeleton";
+import { Separator } from "~/shared/ui/atoms/Separator";
+import { Sheet, SheetContent } from "~/shared/ui/molecules/Sheet";
+import { Skeleton } from "~/shared/ui/atoms/Skeleton";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "~/shared/ui/tooltip";
+} from "~/shared/ui/molecules/Tooltip";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
