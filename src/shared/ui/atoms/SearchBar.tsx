@@ -10,7 +10,7 @@ export function SearchBar() {
                 <path d="m21 21-4.3-4.3" /></svg>
             <input
                 placeholder="Search "
-                className="hidden lg:block text-base font-normal outline-none w-full bg-[#E9E9E9]"
+                className="hidden lg:block text-base font-normal outline-hidden w-full bg-[#E9E9E9]"
             />
         </div>
     );
