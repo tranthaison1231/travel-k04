@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import { SidebarProvider } from "~/shared/ui/sidebar";
+import { SidebarProvider } from "~/shared/ui/organisms/Sidebar";
 import { AdminHeader } from "~/widgets/AdminHeader";
 import { AppSidebar } from "~/widgets/AppSidebar";
 
