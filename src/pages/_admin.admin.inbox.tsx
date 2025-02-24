@@ -2,6 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import { Button } from "~/shared/ui/atoms/Button";
+import { Input } from "~/shared/ui/atoms/Input";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,6 +26,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -168,11 +170,46 @@ export default function Admin() {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Create Invoice</DialogTitle>
-              <DialogDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
-              </DialogDescription>
             </DialogHeader>
+            <div className="space-y-4">
+              <div className="grid flex-1 gap-2">
+                <p>Link</p>
+                <Input
+                  id="link"
+                  defaultValue="https://ui.shadcn.com/docs/installation"
+                  readOnly
+                />
+              </div>
+              <div className="grid flex-1 gap-2">
+                <p>Link</p>
+                <Input
+                  id="link"
+                  defaultValue="https://ui.shadcn.com/docs/installation"
+                  readOnly
+                />
+              </div>
+              <div className="grid flex-1 gap-2">
+                <p>Link</p>
+                <Input
+                  id="link"
+                  defaultValue="https://ui.shadcn.com/docs/installation"
+                  readOnly
+                />
+              </div>
+              <div className="grid flex-1 gap-2">
+                <p>Link</p>
+                <Input
+                  id="link"
+                  defaultValue="https://ui.shadcn.com/docs/installation"
+                  readOnly
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="default">
+                Create
+              </Button>
+            </DialogFooter>
           </DialogContent>
         </Dialog>
       </div>
