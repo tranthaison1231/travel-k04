@@ -21,6 +21,14 @@ import {
   DropdownMenuContent,
 } from "~/shared/ui/molecules/DropdownMenu";
 import { DataTable } from "~/shared/ui/organisms/DataTable";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "~/shared/ui/organisms/Dialog";
 
 interface Invoice {
   id: string;
@@ -153,7 +161,20 @@ export default function Admin() {
   return (
     <div>
       <div className="flex justify-end">
-        <Button variant="default">Create Invoice</Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="default">Create Invoice</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Create Invoice</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
       </div>
       <DataTable
         columns={columns}
