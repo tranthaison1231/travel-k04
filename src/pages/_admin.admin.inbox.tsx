@@ -1,12 +1,22 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
+import { useState } from "react";
 import { Button } from "~/shared/ui/atoms/Button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "~/shared/ui/molecules/AlertDialog";
 import { Checkbox } from "~/shared/ui/molecules/Checkbox";
 import {
   DropdownMenu,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuContent,
 } from "~/shared/ui/molecules/DropdownMenu";
@@ -20,7 +30,7 @@ interface Invoice {
 }
 
 export default function Admin() {
-  const INVOICES: Invoice[] = [
+  const [invoices, setInvoices] = useState<Invoice[]>([
     {
       id: "INV001",
       status: "Paid",
@@ -45,7 +55,7 @@ export default function Admin() {
       method: "Credit Card",
       amount: "$250.00",
     },
-  ];
+  ]);
 
   const columns: ColumnDef<Invoice, unknown>[] = [
     {
@@ -89,7 +99,9 @@ export default function Admin() {
     {
       id: "actions",
       enableHiding: false,
-      cell: () => {
+      accessorKey: "id",
+      cell: (data) => {
+        console.log(data.getValue());
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -99,7 +111,38 @@ export default function Admin() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>Delete</DropdownMenuItem>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    Delete
+                  </DropdownMenuItem>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you sure you want to delete your account?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      your account and remove your data from our servers.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => {
+                        setInvoices((prev) =>
+                          prev.filter(
+                            (invoice) => invoice.id !== data.getValue()
+                          )
+                        );
+                      }}
+                    >
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -108,11 +151,16 @@ export default function Admin() {
   ];
 
   return (
-    <DataTable
-      columns={columns}
-      data={INVOICES}
-      searchColumn="id"
-      filterPlaceholder="Search by id"
-    />
+    <div>
+      <div className="flex justify-end">
+        <Button variant="default">Create Invoice</Button>
+      </div>
+      <DataTable
+        columns={columns}
+        data={invoices}
+        searchColumn="id"
+        filterPlaceholder="Search by id"
+      />
+    </div>
   );
 }
