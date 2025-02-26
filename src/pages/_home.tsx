@@ -1,12 +1,12 @@
 import { Outlet } from "react-router";
+import { Footer } from "~/widgets/Footer";
 import { Header } from "~/widgets/Header";
 import { SettingHeader } from "~/widgets/SettingHeader";
-import { Footer } from "~/widgets/Footer";
 
 export default function Home() {
   return (
     <div>
-      <SettingHeader/>
+      <SettingHeader />
       <Header />
       <Outlet />
       <Footer />

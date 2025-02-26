@@ -44,7 +44,6 @@ const items = [
 
 export function AppSidebar() {
   const location = useLocation();
-  console.log(location);
   return (
     <Sidebar>
       <SidebarContent>

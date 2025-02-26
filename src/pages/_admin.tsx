@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
+import { AdminHeader } from "~/features/home-page/ui/AdminHeader";
 import { SidebarProvider } from "~/shared/ui/organisms/Sidebar";
-import { AdminHeader } from "~/widgets/AdminHeader";
 import { AppSidebar } from "~/widgets/AppSidebar";
 
 export default function Layout() {
