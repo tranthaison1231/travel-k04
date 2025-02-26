@@ -1,4 +1,4 @@
-import { Article  } from "~/widgets/Article";
+import { Article } from "~/features/home-page/ui/Article";
 
 export default function ArticlePage() {
   return (
@@ -7,3 +7,4 @@ export default function ArticlePage() {
     </div>
   );
 }
+
