@@ -1,8 +1,8 @@
 import { Outlet } from "react-router";
 import { AdminHeader } from "~/features/home-page/ui/AdminHeader";
-import { SidebarProvider } from "~/shared/ui/organisms/Sidebar";
+import { SidebarProvider } from "~/shared/ui/molecules/Sidebar";
 import { AppSidebar } from "~/widgets/AppSidebar";
-
+import { ToastContainer } from "react-toastify";
 export default function Layout() {
   return (
     <SidebarProvider>
@@ -13,6 +13,7 @@ export default function Layout() {
           <Outlet />
         </main>
       </div>
+      <ToastContainer autoClose={3000} />
     </SidebarProvider>
   );
 }
