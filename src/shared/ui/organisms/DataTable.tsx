@@ -29,28 +29,42 @@ import {
   TableHeader,
   TableRow,
 } from "~/shared/ui/atoms/Table";
+import { PaginationTable } from "~/shared/ui/organisms/PaginationTable";
 
 export type DataTableProps<T> = {
   data: T[];
   columns: ColumnDef<T, unknown>[];
-  filterPlaceholder?: string;
-  searchColumn: string;
+  rowSelection: Record<string, boolean>;
+  setRowSelection: (
+    updaterOrValue:
+      | Record<string, boolean>
+      | ((old: Record<string, boolean>) => Record<string, boolean>)
+  ) => void;
 };
 
 export function DataTable<T>({
   data,
   columns,
-  filterPlaceholder,
-  searchColumn,
+  rowSelection,
+  setRowSelection,
 }: DataTableProps<T>) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [sorting, setSorting] = React.useState<SortingState>([
+    {
+      id: "id",
+      desc: true,
+    },
+  ]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 0, // Initial page index
+    pageSize: 10, // Default page size
+  });
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
 
+  const [filterBy, setFilterBy] = React.useState("id");
   const table = useReactTable<T>({
     data,
     columns,
@@ -61,8 +75,18 @@ export function DataTable<T>({
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
+    onRowSelectionChange: (updaterOrValue) => {
+      if (typeof updaterOrValue === "function") {
+        setRowSelection((old) => updaterOrValue(old));
+      } else {
+        setRowSelection(updaterOrValue);
+      }
+    },
+    getRowId: (row) => row.id,
+    onPaginationChange: setPagination, //
+    enableRowSelection: true,
     state: {
+      pagination,
       sorting,
       columnFilters,
       columnVisibility,
@@ -73,16 +97,46 @@ export function DataTable<T>({
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <Input
-          placeholder={filterPlaceholder}
-          value={
-            (table.getColumn(searchColumn)?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn(searchColumn)?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        <div className="flex items-center gap-2">
+          <Input
+            placeholder={"Search by " + filterBy}
+            value={
+              (table.getColumn(filterBy)?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn(filterBy)?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm min-w-[300px]"
+          />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto">
+                Search by {filterBy}
+                <ChevronDown />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={filterBy === column.id}
+                      onCheckedChange={(value) => {
+                        table.getColumn(filterBy)?.setFilterValue("");
+                        setFilterBy(value ? column.id : "id");
+                      }}
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  );
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -117,7 +171,11 @@ export function DataTable<T>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      onClick={header.column.getToggleSortingHandler()}
+                      className="cursor-pointer min-w-[50px]"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -160,30 +218,8 @@ export function DataTable<T>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
+
+      <PaginationTable table={table} />
     </div>
   );
 }
