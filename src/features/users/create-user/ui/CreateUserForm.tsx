@@ -1,31 +1,32 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import React from "react";
-import { set, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
-import { urlApi, UserType } from "~/pages/_admin.admin.users";
+import { User } from "~/entities/user";
+import { request } from "~/shared/helpers/request";
 import { Button } from "~/shared/ui/atoms/Button";
 import { Input } from "~/shared/ui/atoms/Input";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "~/shared/ui/organisms/Dialog";
+
 const schema = z.object({
   name: z.string({ required_error: "Name is required" }).min(1),
   phone: z.string({ required_error: "Phone is required" }).min(1),
   country: z.string({ required_error: "Country is required" }).min(1),
   email: z.string({ required_error: "Email is required" }).min(1),
 });
+
 export type CreateUserFormType = z.infer<typeof schema>;
 
 interface CreateUserFormProps {
-  setUsers: React.Dispatch<React.SetStateAction<UserType[]>>;
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
 }
 export default function CreateUserForm({ setUsers }: CreateUserFormProps) {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -37,8 +38,8 @@ export default function CreateUserForm({ setUsers }: CreateUserFormProps) {
     resolver: zodResolver(schema),
   });
   const onSubmit = (data: CreateUserFormType) => {
-    axios
-      .post(urlApi, data)
+    request
+      .post("/users", data)
       .then((data) => {
         setUsers((prev) => [...prev, data.data]);
         toast.success("User created successfully");

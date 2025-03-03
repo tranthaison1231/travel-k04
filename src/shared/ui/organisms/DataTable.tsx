@@ -30,6 +30,7 @@ import {
   TableRow,
 } from "~/shared/ui/atoms/Table";
 import { PaginationTable } from "~/shared/ui/organisms/PaginationTable";
+import { useUrlState } from "~/shared/hooks/use-url-state";
 
 export type DataTableProps<T> = {
   data: T[];
@@ -42,12 +43,11 @@ export type DataTableProps<T> = {
   ) => void;
 };
 
-export function DataTable<T>({
-  data,
-  columns,
-  rowSelection,
-  setRowSelection,
-}: DataTableProps<T>) {
+export function DataTable<
+  T extends {
+    id: string;
+  }
+>({ data, columns, rowSelection, setRowSelection }: DataTableProps<T>) {
   const [sorting, setSorting] = React.useState<SortingState>([
     {
       id: "id",
@@ -57,10 +57,15 @@ export function DataTable<T>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-  const [pagination, setPagination] = React.useState({
-    pageIndex: 0, // Initial page index
-    pageSize: 10, // Default page size
+
+  const [pagination, setPagination] = useUrlState<{
+    pageIndex: string;
+    pageSize: string;
+  }>({
+    pageIndex: "0",
+    pageSize: "10",
   });
+
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
 
@@ -83,10 +88,26 @@ export function DataTable<T>({
       }
     },
     getRowId: (row) => row.id,
-    onPaginationChange: setPagination, //
+    onPaginationChange: (updater) => {
+      const newPagination =
+        updater instanceof Function
+          ? updater({
+              pageIndex: Number(pagination.pageIndex),
+              pageSize: Number(pagination.pageSize),
+            })
+          : updater;
+
+      setPagination({
+        pageIndex: String(newPagination.pageIndex),
+        pageSize: String(newPagination.pageSize),
+      });
+    },
     enableRowSelection: true,
     state: {
-      pagination,
+      pagination: {
+        pageIndex: Number(pagination.pageIndex),
+        pageSize: Number(pagination.pageSize),
+      },
       sorting,
       columnFilters,
       columnVisibility,
