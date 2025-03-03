@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Calendar, Home, Inbox, Search, Settings, User } from "lucide-react";
 import { useLocation } from "react-router";
 
 import {
@@ -10,7 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "~/shared/ui/organisms/Sidebar";
+} from "~/shared/ui/molecules/Sidebar";
 import { cn } from "~/shared/utils/cn";
 
 // Menu items.
@@ -24,6 +24,11 @@ const items = [
     title: "Inbox",
     url: "/admin/inbox",
     icon: Inbox,
+  },
+  {
+    title: "Users",
+    url: "/admin/users",
+    icon: User,
   },
   {
     title: "Calendar",
