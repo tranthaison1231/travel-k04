@@ -10,23 +10,16 @@ import {
 } from "~/shared/ui/molecules/DropdownMenu";
 import { DataTable } from "~/shared/ui/organisms/DataTable";
 
-import { toast } from "react-toastify";
 import CreateUserForm from "~/features/users/create-user/ui/CreateUserForm";
 import EditUserForm from "~/features/users/edit-user/ui/EditUserForm";
 import { Button } from "~/shared/ui/atoms/Button";
 import ConfirmMenu from "~/shared/ui/organisms/ConfirmMenu";
-export const urlApi =
-  "https://67bf11acb2320ee050127e13.mockapi.io/api/v1/users";
-export type UserType = {
-  id: string;
-  name: string;
-  phone: string;
-  birthdate: string;
-  country: string;
-  email: string;
-};
+import { request } from "~/shared/helpers/request";
+import { User } from "~/entities/user";
+import { toast } from "sonner";
+
 export default function UserPage() {
-  const columns: ColumnDef<UserType, unknown>[] = useMemo(
+  const columns: ColumnDef<User, unknown>[] = useMemo(
     () => [
       {
         id: "select",
@@ -120,13 +113,14 @@ export default function UserPage() {
     ],
     []
   );
-  const [users, setUsers] = useState<UserType[]>(() => []);
+  const [users, setUsers] = useState<User[]>(() => []);
   const [rowSelection, setRowSelection] = useState<{ [key: string]: boolean }>(
     {}
   );
+
   const handleDelete = (id: string) => {
-    axios
-      .delete(`${urlApi}/${id}`)
+    request
+      .delete(`users/${id}`)
       .then(() => {
         setUsers((prev) => prev.filter((user) => user.id !== id));
         toast.success("User deleted successfully");
@@ -145,7 +139,7 @@ export default function UserPage() {
     axios
       .all(
         selectedIds.map((id) => {
-          return axios.delete(`${urlApi}/${id}`);
+          return request.delete(`users/${id}`);
         })
       )
       .then(() => {
@@ -161,7 +155,7 @@ export default function UserPage() {
       });
   };
   useEffect(() => {
-    axios.get(urlApi).then((response) => {
+    request.get(`/users`).then((response) => {
       setUsers(response.data);
     });
   }, []);

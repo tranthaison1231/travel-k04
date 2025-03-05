@@ -1,5 +1,6 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import "./global.css";
+import { Toaster } from "./shared/ui/atoms/Sonner";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,6 +16,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        <Toaster richColors position="top-right" />
       </body>
     </html>
   );

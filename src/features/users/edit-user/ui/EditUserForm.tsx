@@ -1,21 +1,21 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { z } from "zod";
-import { urlApi, UserType } from "~/pages/_admin.admin.users";
+import { User } from "~/entities/user";
+import { request } from "~/shared/helpers/request";
 import { Button } from "~/shared/ui/atoms/Button";
 import { Input } from "~/shared/ui/atoms/Input";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "~/shared/ui/organisms/Dialog";
+
 const schema = z.object({
   id: z.string({ required_error: "Id is required" }).min(1),
   name: z.string({ required_error: "Name is required" }).min(1),
@@ -28,7 +28,7 @@ export type EditUserFormType = z.infer<typeof schema>;
 interface EditUserFormProps {
   initialValues: EditUserFormType;
   children: React.ReactNode;
-  setUsers: React.Dispatch<React.SetStateAction<UserType[]>>;
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
 }
 export default function EditUserForm({
   initialValues,
@@ -45,8 +45,8 @@ export default function EditUserForm({
     defaultValues: initialValues,
   });
   const onSubmit = (data: EditUserFormType) => {
-    axios
-      .put(`${urlApi}/${data.id}`, data)
+    request
+      .put(`/users/${data.id}`, data)
       .then((data) => {
         setUsers((prev) => {
           const index = prev.findIndex((user) => user.id === data.data.id);
