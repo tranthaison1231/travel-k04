@@ -1,9 +1,15 @@
-import { Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import { AdminHeader } from "~/features/home-page/ui/AdminHeader";
 import { SidebarProvider } from "~/shared/ui/molecules/Sidebar";
 import { AppSidebar } from "~/widgets/AppSidebar";
 
 export default function Layout() {
+  const accessToken = localStorage.getItem("accessToken");
+
+  if (!accessToken) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <SidebarProvider>
       <AppSidebar />
