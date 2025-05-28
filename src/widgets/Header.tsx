@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import Logo from "~/assets/images/logo.svg";
 import { SearchBar } from "~/shared/ui/atoms/SearchBar";
 import { UserMenu } from "~/widgets/UserMenu";
-import { NavBar } from "./Navbar";
+import { NavBar } from "~/widgets/NavBar";
 
 export function Header() {
   const navigate = useNavigate();

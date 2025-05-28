@@ -54,7 +54,7 @@ export function NavBar() {
       {NAV_ITEMS.map((item) => (
         <Link key={item.link} to={item.link} className="cursor-pointer">
           <MenubarMenu>
-            <MenubarTrigger>{item.title} 👍</MenubarTrigger>
+            <MenubarTrigger>{item.title}</MenubarTrigger>
             {item.children && (
               <MenubarContent>
                 {item.children.map((child) => (
